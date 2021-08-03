@@ -1,13 +1,27 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, session
 import random
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
+app.secret_key = 'dj~fal*kduu9^032>8e?3ookso('
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        pass
+        still_guessing = True
+        guess = request.form["guess"]
+        if guess < magic_number:
+            low_value = guess
+            message = f'{guess} is too low!'
+        elif guess > magic_number:
+            high_value = guess
+            message = f'{guess} is too high!'
+        elif guess == magic_number:
+            message = f'Congratulations {guess} is the correct number! You Won!'
+        else:
+            message = f'Please enter a valid number!'
+            still_guessing = False
+
     else:
         low_value = 1
         high_value = 50
